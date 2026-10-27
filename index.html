@@ -1,0 +1,1309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  
+  <!-- SEO Meta Tags -->
+  <title>Premium Net Worth Tracker | Offline Personal Finance Dashboard</title>
+  <meta name="description" content="Take control of your wealth with the Premium Net Worth Tracker. A beautifully designed, offline-first alternative to boring spreadsheets. Track assets, liabilities, and analytics. Available on Etsy.">
+  <meta name="keywords" content="net worth tracker, personal finance, wealth management, budget spreadsheet alternative, finance dashboard, offline finance tool, etsy finance template">
+  <meta name="author" content="Your Etsy Shop Name">
+  
+  <!-- Open Graph (Social Media) -->
+  <meta property="og:title" content="Premium Net Worth Tracker | Offline Finance Dashboard">
+  <meta property="og:description" content="Track your wealth beautifully. An offline-first, private alternative to spreadsheets. Buy now on Etsy.">
+  <meta property="og:type" content="website">
+
+  <style>
+    /* ============================================================
+       DESIGN TOKENS (LIGHT THEME)
+       ============================================================ */
+    :root {
+      --bg-main: #F5F5F7;
+      --bg-surface: #FFFFFF;
+      --bg-surface-secondary: #F0F0F4;
+      --text-primary: #1D1D1F;
+      --text-secondary: #6E6E73;
+      --text-muted: #8E8E93;
+      --border: #E3E3E8;
+      --border-subtle: #EDEDF0;
+      --accent-blue: #356AE6;
+      --accent-violet: #7666E8;
+      --accent-soft: #E8EEFD;
+      --positive: #16845B;
+      --positive-soft: #E2F3EC;
+      --negative: #D64545;
+      --negative-soft: #FCEAEA;
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+      --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.08);
+      --shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.12);
+      --radius-sm: 12px;
+      --radius-md: 20px;
+      --radius-lg: 32px;
+      --font-stack: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      --transition: 250ms ease;
+    }
+
+    /* ============================================================
+       DESIGN TOKENS (DARK THEME)
+       ============================================================ */
+    [data-theme="dark"] {
+      --bg-main: #111114;
+      --bg-surface: #1A1A1F;
+      --bg-surface-secondary: #222229;
+      --text-primary: #F5F5F7;
+      --text-secondary: #A1A1AA;
+      --text-muted: #7A7A85;
+      --border: #35353E;
+      --border-subtle: #2A2A33;
+      --accent-blue: #7C9CFF;
+      --accent-violet: #A99AF8;
+      --accent-soft: #1E2A4A;
+      --positive: #4BD6A0;
+      --positive-soft: #1A3A2E;
+      --negative: #FF8585;
+      --negative-soft: #3D1E1E;
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.2);
+      --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.3);
+      --shadow-lg: 0 24px 64px rgba(0, 0, 0, 0.5);
+    }
+
+    /* ============================================================
+       RESET & BASE
+       ============================================================ */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+    }
+
+    body {
+      font-family: var(--font-stack);
+      background-color: var(--bg-main);
+      color: var(--text-primary);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      transition: background-color var(--transition), color var(--transition);
+      overflow-x: hidden;
+    }
+
+    img, svg {
+      max-width: 100%;
+      display: block;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* ============================================================
+       NAVIGATION
+       ============================================================ */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 72px;
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      z-index: 1000;
+      transition: background-color var(--transition), border-color var(--transition);
+    }
+
+    [data-theme="dark"] .navbar {
+      background: rgba(26, 26, 31, 0.8);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      font-size: 1.2rem;
+      letter-spacing: -0.5px;
+    }
+
+    .logo-icon {
+      width: 32px;
+      height: 32px;
+      background: linear-gradient(135deg, var(--accent-blue), var(--accent-violet));
+      border-radius: 9px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 1rem;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .theme-toggle {
+      background: var(--bg-surface-secondary);
+      border: 1px solid var(--border);
+      color: var(--text-secondary);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all var(--transition);
+    }
+
+    .theme-toggle:hover {
+      color: var(--text-primary);
+      background: var(--border);
+    }
+
+    .theme-toggle svg {
+      width: 20px;
+      height: 20px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .btn-primary {
+      background: var(--accent-blue);
+      color: #fff;
+      padding: 10px 24px;
+      border-radius: 980px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: background var(--transition), transform 100ms ease;
+      box-shadow: 0 4px 12px rgba(53, 106, 230, 0.3);
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .btn-primary:hover {
+      background: #2A5BD0;
+      transform: translateY(-1px);
+    }
+
+    /* ============================================================
+       HERO SECTION
+       ============================================================ */
+    .hero {
+      padding: 160px 24px 80px;
+      text-align: center;
+      max-width: 1000px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .hero-badge {
+      background: var(--accent-soft);
+      color: var(--accent-blue);
+      padding: 6px 16px;
+      border-radius: 980px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 24px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 800;
+      letter-spacing: -1.5px;
+      line-height: 1.1;
+      margin-bottom: 24px;
+      color: var(--text-primary);
+    }
+
+    .hero p {
+      font-size: clamp(1.1rem, 2vw, 1.3rem);
+      color: var(--text-secondary);
+      max-width: 700px;
+      margin-bottom: 40px;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .btn-large {
+      padding: 16px 36px;
+      font-size: 1.1rem;
+    }
+
+    .btn-secondary {
+      background: var(--bg-surface);
+      color: var(--text-primary);
+      border: 1px solid var(--border);
+      padding: 10px 24px;
+      border-radius: 980px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: all var(--transition);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .btn-secondary:hover {
+      background: var(--bg-surface-secondary);
+    }
+
+    /* ============================================================
+       LIVE APP PREVIEW (The "Screenshot")
+       ============================================================ */
+    .app-preview-wrapper {
+      margin-top: 60px;
+      width: 100%;
+      max-width: 1100px;
+      background: var(--bg-surface);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      position: relative;
+      text-align: left;
+    }
+
+    /* Browser Window Header */
+    .window-header {
+      height: 48px;
+      background: var(--bg-surface-secondary);
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+      gap: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .window-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+    .window-dot.red { background: #FF5F56; }
+    .window-dot.yellow { background: #FFBD2E; }
+    .window-dot.green { background: #27C93F; }
+
+    .window-title {
+      margin: 0 auto;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    /* The Dashboard Layout */
+    .dashboard-preview {
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      background: var(--bg-main);
+      min-height: 600px;
+      pointer-events: none; /* Prevents clicking inside the mockup */
+    }
+
+    /* Sidebar */
+    .db-sidebar {
+      background: var(--bg-surface);
+      border-right: 1px solid var(--border-subtle);
+      padding: 24px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .db-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    .db-nav {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .db-nav-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    .db-nav-item.active {
+      background: var(--accent-soft);
+      color: var(--accent-blue);
+    }
+
+    .db-nav-item svg {
+      width: 18px;
+      height: 18px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 1.8;
+    }
+
+    /* Main Dashboard Area */
+    .db-main {
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .db-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .db-title h1 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+
+    .db-title p {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      margin-top: 4px;
+    }
+
+    .db-add-btn {
+      background: var(--accent-blue);
+      color: #fff;
+      padding: 8px 16px;
+      border-radius: 980px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Metric Cards Row */
+    .db-metrics {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    .db-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      padding: 16px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .db-card-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .db-card-value {
+      font-size: 1.6rem;
+      font-weight: 700;
+      font-family: monospace;
+      letter-spacing: -0.5px;
+    }
+
+    .db-card-value.positive { color: var(--positive); }
+    .db-card-value.negative { color: var(--negative); }
+
+    .db-card-sub {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    /* Charts Area */
+    .db-charts {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 16px;
+    }
+
+    .db-chart-panel {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .db-chart-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .db-chart-header svg {
+      width: 16px;
+      height: 16px;
+      stroke: var(--accent-blue);
+      fill: none;
+      stroke-width: 2;
+    }
+
+    /* Mockup SVG Chart */
+    .mockup-chart-svg {
+      width: 100%;
+      height: 180px;
+      overflow: visible;
+    }
+
+    /* Allocation Bars Mockup */
+    .mockup-allocation {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .mockup-allocation-item {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .mockup-alloc-header {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+
+    .mockup-alloc-bar {
+      height: 8px;
+      background: var(--bg-surface-secondary);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .mockup-alloc-fill {
+      height: 100%;
+      border-radius: 4px;
+    }
+
+    /* ============================================================
+       FEATURES / WHY BETTER SECTION
+       ============================================================ */
+    .section {
+      padding: 100px 24px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-header {
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto 60px;
+    }
+
+    .section-header h2 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      letter-spacing: -1px;
+      margin-bottom: 16px;
+    }
+
+    .section-header p {
+      font-size: 1.15rem;
+      color: var(--text-secondary);
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 32px;
+    }
+
+    .feature-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      box-shadow: var(--shadow-sm);
+      transition: transform var(--transition), box-shadow var(--transition);
+    }
+
+    .feature-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .feature-icon {
+      width: 56px;
+      height: 56px;
+      background: var(--accent-soft);
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent-blue);
+      margin-bottom: 24px;
+    }
+
+    .feature-icon svg {
+      width: 28px;
+      height: 28px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .feature-card h3 {
+      font-size: 1.4rem;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+
+    .feature-card p {
+      color: var(--text-secondary);
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+
+    /* ============================================================
+       COMPARISON TABLE (SPREADSHEET VS APP)
+       ============================================================ */
+    .comparison-section {
+      background: var(--bg-surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 100px 24px;
+    }
+
+    .comparison-table {
+      width: 100%;
+      max-width: 900px;
+      margin: 0 auto;
+      border-collapse: collapse;
+      background: var(--bg-main);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-md);
+      border: 1px solid var(--border);
+    }
+
+    .comparison-table th, 
+    .comparison-table td {
+      padding: 20px 24px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .comparison-table th {
+      font-weight: 700;
+      font-size: 1.1rem;
+      background: var(--bg-surface-secondary);
+    }
+
+    .comparison-table th:first-child { width: 40%; }
+    .comparison-table th:nth-child(2) { width: 30%; color: var(--text-secondary); }
+    .comparison-table th:nth-child(3) { width: 30%; color: var(--accent-blue); }
+
+    .comparison-table tr:last-child td { border-bottom: none; }
+
+    .comparison-table td {
+      font-size: 1rem;
+      color: var(--text-primary);
+    }
+
+    .comparison-table td:nth-child(2) {
+      color: var(--text-secondary);
+    }
+
+    .check-icon {
+      color: var(--positive);
+      width: 24px;
+      height: 24px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 3;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    /* ============================================================
+       TESTIMONIALS
+       ============================================================ */
+    .testimonial-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+    }
+
+    .testimonial-card {
+      background: var(--bg-surface);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .stars {
+      display: flex;
+      gap: 4px;
+      margin-bottom: 16px;
+    }
+
+    .stars svg {
+      width: 20px;
+      height: 20px;
+      fill: #F5C76B;
+      stroke: #F5C76B;
+    }
+
+    .testimonial-text {
+      font-size: 1rem;
+      color: var(--text-primary);
+      font-style: italic;
+      margin-bottom: 24px;
+      line-height: 1.6;
+    }
+
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .author-avatar {
+      width: 40px;
+      height: 40px;
+      background: var(--accent-soft);
+      color: var(--accent-blue);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+    }
+
+    .author-info h4 {
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+
+    .author-info p {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+    }
+
+    /* ============================================================
+       CTA SECTION
+       ============================================================ */
+    .cta-section {
+      padding: 100px 24px;
+      text-align: center;
+      background: linear-gradient(135deg, var(--accent-blue), var(--accent-violet));
+      color: #fff;
+    }
+
+    .cta-section h2 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      letter-spacing: -1px;
+      margin-bottom: 16px;
+    }
+
+    .cta-section p {
+      font-size: 1.15rem;
+      max-width: 600px;
+      margin: 0 auto 40px;
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .btn-white {
+      background: #fff;
+      color: var(--accent-blue);
+      padding: 16px 48px;
+      border-radius: 980px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      transition: transform 100ms ease, box-shadow var(--transition);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    }
+
+    .btn-white:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn-white svg {
+      width: 24px;
+      height: 24px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    /* ============================================================
+       FOOTER
+       ============================================================ */
+    .footer {
+      padding: 40px 24px;
+      text-align: center;
+      border-top: 1px solid var(--border);
+      background: var(--bg-surface);
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+    }
+
+    /* ============================================================
+       RESPONSIVE DESIGN
+       ============================================================ */
+    @media (max-width: 1024px) {
+      .dashboard-preview {
+        grid-template-columns: 1fr;
+      }
+      .db-sidebar {
+        display: none;
+      }
+      .db-metrics {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .db-charts {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .app-preview-wrapper {
+        border-radius: var(--radius-md);
+      }
+      .db-main {
+        padding: 20px;
+      }
+      .comparison-table th, 
+      .comparison-table td {
+        padding: 16px;
+        font-size: 0.9rem;
+      }
+      .hero {
+        padding-top: 120px;
+      }
+      .nav-actions .btn-primary {
+        display: none; 
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero h1 { font-size: 2.2rem; }
+      .btn-large { width: 100%; }
+      .hero-buttons { flex-direction: column; }
+      .db-metrics { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ========================================== -->
+  <!-- NAVIGATION                                 -->
+  <!-- ========================================== -->
+  <nav class="navbar">
+    <div class="logo">
+      <div class="logo-icon">N</div>
+      Net Worth Tracker
+    </div>
+    <div class="nav-actions">
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle Dark Mode">
+        <svg id="themeIcon" viewBox="0 0 24 24">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+      </button>
+      <a href="YOUR_ETSY_LINK_HERE" class="btn-primary" target="_blank">Buy on Etsy</a>
+    </div>
+  </nav>
+
+  <!-- ========================================== -->
+  <!-- HERO SECTION                               -->
+  <!-- ========================================== -->
+  <header class="hero">
+    <span class="hero-badge">Premium Offline Finance Tool</span>
+    <h1>Master Your Wealth. <br>Ditch the Spreadsheet.</h1>
+    <p>A beautifully designed, privacy-first dashboard to track your net worth, assets, and liabilities. No subscriptions. No cloud. Just you and your financial freedom.</p>
+    <div class="hero-buttons">
+      <a href="YOUR_ETSY_LINK_HERE" class="btn-primary btn-large" target="_blank">Get the App on Etsy</a>
+      <a href="#features" class="btn-secondary btn-large">Explore Features</a>
+    </div>
+
+    <!-- LIVE APP PREVIEW MOCKUP -->
+    <div class="app-preview-wrapper">
+      <!-- Browser Window Header -->
+      <div class="window-header">
+        <div class="window-dot red"></div>
+        <div class="window-dot yellow"></div>
+        <div class="window-dot green"></div>
+        <div class="window-title">Net Worth Tracker · Dashboard</div>
+      </div>
+      
+      <!-- Dashboard Layout -->
+      <div class="dashboard-preview">
+        
+        <!-- Sidebar -->
+        <div class="db-sidebar">
+          <div class="db-brand">
+            <div class="logo-icon" style="width: 28px; height: 28px; font-size: 0.8rem;">N</div>
+            Net Worth
+          </div>
+          <div class="db-nav">
+            <div class="db-nav-item active">
+              <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5" /><rect x="14" y="3" width="7" height="7" rx="1.5" /><rect x="3" y="14" width="7" height="7" rx="1.5" /><rect x="14" y="14" width="7" height="7" rx="1.5" /></svg>
+              Dashboard
+            </div>
+            <div class="db-nav-item">
+              <svg viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" /></svg>
+              Assets
+            </div>
+            <div class="db-nav-item">
+              <svg viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" /></svg>
+              Liabilities
+            </div>
+            <div class="db-nav-item">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg>
+              History
+            </div>
+            <div class="db-nav-item">
+              <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10" /><line x1="12" y1="20" x2="12" y2="4" /><line x1="6" y1="20" x2="6" y2="14" /></svg>
+              Analytics
+            </div>
+          </div>
+        </div>
+
+        <!-- Main Dashboard Content -->
+        <div class="db-main">
+          <!-- Dashboard Header -->
+          <div class="db-header">
+            <div class="db-title">
+              <h1>Dashboard</h1>
+              <p>Your financial overview at a glance</p>
+            </div>
+            <div class="db-add-btn">+ Add Asset</div>
+          </div>
+
+          <!-- Metric Cards Row -->
+          <div class="db-metrics">
+            <div class="db-card">
+              <div class="db-card-label">Net Worth</div>
+              <div class="db-card-value positive">$508,800</div>
+              <div class="db-card-sub">+$88,800 vs previous</div>
+            </div>
+            <div class="db-card">
+              <div class="db-card-label">Total Assets</div>
+              <div class="db-card-value">$1,030,500</div>
+              <div class="db-card-sub">—</div>
+            </div>
+            <div class="db-card">
+              <div class="db-card-label">Total Liabilities</div>
+              <div class="db-card-value negative">$521,700</div>
+              <div class="db-card-sub">—</div>
+            </div>
+            <div class="db-card">
+              <div class="db-card-label">Debt-to-Asset</div>
+              <div class="db-card-value">50.6%</div>
+              <div class="db-card-sub">—</div>
+            </div>
+          </div>
+
+          <!-- Charts Area -->
+          <div class="db-charts">
+            <!-- Trend Chart -->
+            <div class="db-chart-panel">
+              <div class="db-chart-header">
+                <span>Net Worth Trend</span>
+                <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12" /></svg>
+              </div>
+              
+              <!-- Custom SVG Line Chart to simulate the app -->
+              <svg class="mockup-chart-svg" viewBox="0 0 400 180" preserveAspectRatio="none">
+                <defs>
+                  <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="var(--accent-blue)" stop-opacity="0.2"/>
+                    <stop offset="100%" stop-color="var(--accent-blue)" stop-opacity="0"/>
+                  </linearGradient>
+                </defs>
+                <!-- Grid lines -->
+                <line x1="0" y1="45" x2="400" y2="45" stroke="var(--border-subtle)" stroke-width="1" stroke-dasharray="4 4" />
+                <line x1="0" y1="90" x2="400" y2="90" stroke="var(--border-subtle)" stroke-width="1" stroke-dasharray="4 4" />
+                <line x1="0" y1="135" x2="400" y2="135" stroke="var(--border-subtle)" stroke-width="1" stroke-dasharray="4 4" />
+                
+                <!-- Area -->
+                <path d="M 10 150 L 100 120 L 200 80 L 300 40 L 390 20 L 390 170 L 10 170 Z" fill="url(#chartGrad)" />
+                
+                <!-- Line -->
+                <path d="M 10 150 L 100 120 L 200 80 L 300 40 L 390 20" fill="none" stroke="var(--accent-blue)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+                
+                <!-- Data Points -->
+                <circle cx="10" cy="150" r="5" fill="var(--bg-surface)" stroke="var(--accent-blue)" stroke-width="3" />
+                <circle cx="100" cy="120" r="5" fill="var(--bg-surface)" stroke="var(--accent-blue)" stroke-width="3" />
+                <circle cx="200" cy="80" r="5" fill="var(--bg-surface)" stroke="var(--accent-blue)" stroke-width="3" />
+                <circle cx="300" cy="40" r="5" fill="var(--bg-surface)" stroke="var(--accent-blue)" stroke-width="3" />
+                <circle cx="390" cy="20" r="5" fill="var(--bg-surface)" stroke="var(--accent-blue)" stroke-width="3" />
+
+                <!-- X-Axis Labels -->
+                <text x="10" y="175" font-size="10" fill="var(--text-muted)" text-anchor="middle">Apr</text>
+                <text x="100" y="175" font-size="10" fill="var(--text-muted)" text-anchor="middle">May</text>
+                <text x="200" y="175" font-size="10" fill="var(--text-muted)" text-anchor="middle">Jun</text>
+                <text x="300" y="175" font-size="10" fill="var(--text-muted)" text-anchor="middle">Jul</text>
+                <text x="390" y="175" font-size="10" fill="var(--text-muted)" text-anchor="middle">Aug</text>
+              </svg>
+            </div>
+
+            <!-- Asset Allocation -->
+            <div class="db-chart-panel">
+              <div class="db-chart-header">
+                <span>Asset Allocation</span>
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" /><path d="M12 2a10 10 0 0 1 10 10" /></svg>
+              </div>
+              
+              <div class="mockup-allocation">
+                <div class="mockup-allocation-item">
+                  <div class="mockup-alloc-header">
+                    <span>Property</span>
+                    <span>71.3%</span>
+                  </div>
+                  <div class="mockup-alloc-bar">
+                    <div class="mockup-alloc-fill" style="width: 71.3%; background: var(--accent-blue);"></div>
+                  </div>
+                </div>
+                <div class="mockup-allocation-item">
+                  <div class="mockup-alloc-header">
+                    <span>Retirement</span>
+                    <span>15.1%</span>
+                  </div>
+                  <div class="mockup-alloc-bar">
+                    <div class="mockup-alloc-fill" style="width: 15.1%; background: var(--accent-violet);"></div>
+                  </div>
+                </div>
+                <div class="mockup-allocation-item">
+                  <div class="mockup-alloc-header">
+                    <span>Investments</span>
+                    <span>8.0%</span>
+                  </div>
+                  <div class="mockup-alloc-bar">
+                    <div class="mockup-alloc-fill" style="width: 8.0%; background: #4A90D9;"></div>
+                  </div>
+                </div>
+                <div class="mockup-allocation-item">
+                  <div class="mockup-alloc-header">
+                    <span>Cash & Savings</span>
+                    <span>5.6%</span>
+                  </div>
+                  <div class="mockup-alloc-bar">
+                    <div class="mockup-alloc-fill" style="width: 5.6%; background: #5E9C9C;"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ========================================== -->
+  <!-- FEATURES SECTION                           -->
+  <!-- ========================================== -->
+  <section class="section" id="features">
+    <div class="section-header">
+      <h2>Everything you need. <br>Nothing you don't.</h2>
+      <p>We built the ultimate financial dashboard by focusing on what actually matters for wealth tracking.</p>
+    </div>
+
+    <div class="grid-3">
+      <!-- Feature 1 -->
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        </div>
+        <h3>Total Privacy</h3>
+        <p>100% offline. Your financial data never leaves your device. No cloud sync, no external servers, no data mining. Completely secure.</p>
+      </div>
+
+      <!-- Feature 2 -->
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+        </div>
+        <h3>Interactive Analytics</h3>
+        <p>View your asset allocation with donut charts, track net worth trends over time, and monitor your debt-to-asset ratio dynamically.</p>
+      </div>
+
+      <!-- Feature 3 -->
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        </div>
+        <h3>Data Ownership</h3>
+        <p>Export your data to JSON for secure backups or CSV for Excel/Sheets compatibility. Your data is yours to keep forever.</p>
+      </div>
+
+      <!-- Feature 4 -->
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        </div>
+        <h3>Fully Responsive</h3>
+        <p>Designed perfectly for your desktop, tablet, and mobile phone. The interface adapts beautifully to any screen size.</p>
+      </div>
+
+      <!-- Feature 5 -->
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <h3>Historical Snapshots</h3>
+        <p>Take snapshots of your finances over time to visually see your net worth grow month over month.</p>
+      </div>
+
+      <!-- Feature 6 -->
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        </div>
+        <h3>Multiple Currencies</h3>
+        <p>Easily format your dashboard in USD, EUR, GBP, JPY, CAD, or AUD with a single click in settings.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================== -->
+  <!-- COMPARISON SECTION                         -->
+  <!-- ========================================== -->
+  <section class="comparison-section">
+    <div class="section-header">
+      <h2>Why upgrade from a spreadsheet?</h2>
+      <p>Spreadsheets are great for lists, but terrible for a dynamic financial overview.</p>
+    </div>
+
+    <table class="comparison-table">
+      <thead>
+        <tr>
+          <th>Feature</th>
+          <th>Regular Spreadsheet</th>
+          <th>Net Worth Tracker</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Visual Analytics</strong></td>
+          <td>Requires manual setup & formulas</td>
+          <td>Instant automated charts</td>
+        </tr>
+        <tr>
+          <td><strong>Privacy & Security</strong></td>
+          <td>Stored in Cloud (Google/Microsoft)</td>
+          <td>100% Offline & Private</td>
+        </tr>
+        <tr>
+          <td><strong>Mobile Experience</strong></td>
+          <td>Difficult to navigate & zoom</td>
+          <td>App-like native experience</td>
+        </tr>
+        <tr>
+          <td><strong>Setup Time</strong></td>
+          <td>Hours of formatting</td>
+          <td>Ready in 1 minute</td>
+        </tr>
+        <tr>
+          <td><strong>User Interface</strong></td>
+          <td>Grids and endless rows</td>
+          <td>Premium Apple-inspired design</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ========================================== -->
+  <!-- TESTIMONIALS SECTION                       -->
+  <!-- ========================================== -->
+  <section class="section">
+    <div class="section-header">
+      <h2>Loved by smart investors</h2>
+      <p>Join hundreds of users taking control of their financial lives.</p>
+    </div>
+
+    <div class="testimonial-grid">
+      <div class="testimonial-card">
+        <div class="stars">
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <p class="testimonial-text">"I tried building my own net worth tracker in Excel for years. It was clunky and ugly. This app changed everything. It looks like a native Mac app and works perfectly on my iPad."</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">JD</div>
+          <div class="author-info">
+            <h4>James D.</h4>
+            <p>Verified Buyer</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card">
+        <div class="stars">
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <p class="testimonial-text">"Finally, a finance tool that respects my privacy. I don't want my bank accounts linked to the cloud. The offline JSON backup feature gives me total peace of mind."</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">SL</div>
+          <div class="author-info">
+            <h4>Sarah L.</h4>
+            <p>Verified Buyer</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================== -->
+  <!-- CALL TO ACTION SECTION                     -->
+  <!-- ========================================== -->
+  <section class="cta-section">
+    <h2>Ready to track your wealth?</h2>
+    <p>Get instant access to the Net Worth Tracker. One-time purchase. Lifetime access. No subscriptions.</p>
+    <a href="YOUR_ETSY_LINK_HERE" class="btn-white" target="_blank">
+      Buy Now on Etsy
+      <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+    </a>
+  </section>
+
+  <!-- ========================================== -->
+  <!-- FOOTER                                     -->
+  <!-- ========================================== -->
+  <footer class="footer">
+    <p>&copy; <span id="year"></span> Your Etsy Shop Name. All rights reserved.</p>
+    <p style="margin-top: 8px; font-size: 0.8rem;">This product is a standalone HTML application. It does not connect to bank accounts or provide financial advice.</p>
+  </footer>
+
+  <!-- ========================================== -->
+  <!-- JAVASCRIPT (Theme & Animations)            -->
+  <!-- ========================================== -->
+  <script>
+    // Set current year in footer
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Theme Toggle Logic
+    const themeToggleBtn = document.getElementById('themeToggle');
+    const themeIcon = document.getElementById('themeIcon');
+    const htmlElement = document.documentElement;
+
+    // Check for saved user preference, if any, on load of the website
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+      htmlElement.setAttribute('data-theme', savedTheme);
+      updateIcon(savedTheme);
+    } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      // If no saved preference, check system preference
+      htmlElement.setAttribute('data-theme', 'dark');
+      updateIcon('dark');
+    }
+
+    // Toggle theme on button click
+    themeToggleBtn.addEventListener('click', () => {
+      const currentTheme = htmlElement.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      
+      htmlElement.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+      updateIcon(newTheme);
+    });
+
+    function updateIcon(theme) {
+      if (theme === 'dark') {
+        // Sun icon for dark mode
+        themeIcon.innerHTML = '<circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>';
+      } else {
+        // Moon icon for light mode
+        themeIcon.innerHTML = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>';
+      }
+    }
+
+    // Simple Scroll Reveal Animation
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: "0px 0px -50px 0px"
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.feature-card, .testimonial-card, .section-header').forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(20px)';
+      el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+      observer.observe(el);
+    });
+  </script>
+</body>
+</html>
